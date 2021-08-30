@@ -171,99 +171,78 @@ INSERT INTO SCHEDULE VALUES (34633, 72723, TO_TIMESTAMP ('01-02-2021 15:30', 'DD
 INSERT INTO SCHEDULE VALUES (23604, 92933, TO_TIMESTAMP ('11-02-2021 14:30', 'DD-MM-YYYY HH24:MI'), 'Interview with TIMES', TO_TIMESTAMP ('11-02-2021 16:15', 'DD-MM-YYYY HH24:MI'), NULL);
 INSERT INTO SCHEDULE VALUES (14671, 23244, TO_TIMESTAMP ('13-03-2021 12:00', 'DD-MM-YYYY HH24:MI'), 'Album Discussion', TO_TIMESTAMP ('13-03-2021 14:45', 'DD-MM-YYYY HH24:MI'), NULL);
 INSERT INTO SCHEDULE VALUES (41169, 67832, TO_TIMESTAMP ('23-03-2021 9:00', 'DD-MM-YYYY HH24:MI'), 'VMAs', TO_TIMESTAMP ('23-03-2021 10:00', 'DD-MM-YYYY HH24:MI'), NULL);
-SELECT * FROM schedule;
------------------------
 
-SELECT * FROM (
-SELECT 
-    artist.stage_name,
-    album.al_name,
-    album.release_date, 
-    album.total_tracks,
-    album.al_length
-FROM  album INNER JOIN artist
-ON album.a_id=artist.a_id
-ORDER BY album.al_length DESC
-)
-WHERE ROWNUM <= 3;
+SELECT * FROM schedule;
+======================================================================
+1. Retriving top 3 albums
+
+	SELECT * FROM (
+	SELECT 
+	    artist.stage_name,
+	    album.al_name,
+	    album.release_date, 
+	    album.total_tracks,
+	    album.al_length
+	FROM  album INNER JOIN artist
+	ON album.a_id=artist.a_id
+	ORDER BY album.al_length DESC
+	)
+	WHERE ROWNUM <= 3;
 
 ----------------------------
+2. Retrieving manager details of Artist who joined on or after “1 JAN 2016”.
 
-CREATE VIEW artist_manager AS
-SELECT
-  artist.stage_name,
-  artist.a_contact,
-  emp.e_fname,
-  emp.e_lname,
-  emp.e_contact
-FROM (employee emp
-JOIN manager m
-  ON emp.e_id = m.e_id
-JOIN artist
-  ON artist.a_id = m.a_id)
-WHERE artist.a_joindate >= '01-JAN-2016';
+	CREATE VIEW artist_manager AS
+	SELECT
+	  artist.stage_name,
+	  artist.a_contact,
+	  emp.e_fname,
+	  emp.e_lname,
+	  emp.e_contact
+	FROM (employee emp
+	JOIN manager m
+	  ON emp.e_id = m.e_id
+	JOIN artist
+	  ON artist.a_id = m.a_id)
+	WHERE artist.a_joindate >= '01-JAN-2016';
 
-
-
-SELECT * FROM artist_manager;
-
-------------------------------
-
-SELECT 
-      E.e_id, E.e_fname, E.e_lname, M.dept
-FROM Employee E
-INNER JOIN marketing M ON E.e_id=M.e_id
-ORDER BY e_id ASC;
+	SELECT * FROM artist_manager;
 
 ------------------------------
+3. Retrieving the list of employees in marketing field
 
-SELECT EXTRACT (year FROM release_date) "Year",
-   COUNT (release_date) "No. of Albums"
-   FROM album
-   GROUP BY EXTRACT (year FROM release_date)
-   ORDER BY "Year" ASC;
+	SELECT 
+	      E.e_id, E.e_fname, E.e_lname, M.dept
+	FROM Employee E
+	INNER JOIN marketing M ON E.e_id=M.e_id
+	ORDER BY e_id ASC;
+
+------------------------------
+4. Retrieving number of Albums released per year
+
+	SELECT EXTRACT (year FROM release_date) "Year",
+	   COUNT (release_date) "No. of Albums"
+	   FROM album
+	   GROUP BY EXTRACT (year FROM release_date)
+	   ORDER BY "Year" ASC;
 
 -----------------------------
+5. Retrieving Music Videos that crossed 1B views
 
-SELECT a.stage_name, v.v_title, v.total_views
-FROM artist a, song s, music_video v
-WHERE s.s_id=v.s_id AND a.a_id=s.a_id AND v.total_views LIKE '%B'
-ORDER BY total_views DESC;
-
-----------------------------
-
-UPDATE SCHEDULE
- SET DURATION_MIN =  
- EXTRACT (DAY FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME) * 24 * 60 +
- EXTRACT (HOUR FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME) * 60 + 
- EXTRACT (MINUTE FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME);
-SELECT * FROM SCHEDULE;
+	SELECT a.stage_name, v.v_title, v.total_views
+	FROM artist a, song s, music_video v
+	WHERE s.s_id=v.s_id AND a.a_id=s.a_id AND v.total_views LIKE '%B'
+	ORDER BY total_views DESC;
 
 ----------------------------
+6. Calculating the duration of the work to be done and updating the schedule table
 
-select
-    ar.stage_name "Artist Name",ar.net_worth "Net Worth",
-    count(*) "Number of Songs"
-from
-    song s join album  al on s.al_id = al.al_id
-    	   join artist ar on al.a_id = ar.a_id
-group by ar.stage_name,ar.net_worth
-order by
-    count(*) desc;
----------------------------
+	UPDATE SCHEDULE
+	 SET DURATION_MIN =  
+	 EXTRACT (DAY FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME) * 24 * 60 +
+	 EXTRACT (HOUR FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME) * 60 + 
+	 EXTRACT (MINUTE FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME);
+	
+	SELECT * FROM SCHEDULE;
 
-select  
-	temp.artist "Artist Name",
-	count(*) "Number of Songs"
-from (
-       select
-           ar.stage_name as artist,
-           s.s_length as duration
-        from
-            song s join album al on s.al_id = al.al_id 
-            	    join artist ar on  al.a_id = ar.a_id
-        where s_length > '3'
-        ) temp
-group by
-	temp.artist
-order by count(*);
+----------------------------
