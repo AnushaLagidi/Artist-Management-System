@@ -1,0 +1,269 @@
+CREATE TABLE artist (
+    a_id NUMBER PRIMARY KEY,
+    stage_name VARCHAR(20),
+    a_fname VARCHAR(20),
+    a_lname VARCHAR(20),
+    a_gender VARCHAR(1),
+    a_dob DATE,
+    a_contact VARCHAR(12),
+    a_joindate DATE,
+    net_worth NUMBER
+);
+
+INSERT INTO artist VALUES(23244, 'Ava Max', 'Amanda', 'Ava Koci', 'F', '16-FEB-1994', '555-332-4543', '21-AUG-2016', 3000000);
+INSERT INTO artist VALUES(67832, 'Cardi B', 'Belcalis', 'Marlenis Almánzar', 'F', '11-OCT-1992', '435-745-6382', '05-FEB-2017', 24000000);
+INSERT INTO artist VALUES(79923, 'Charlie Puth', 'Charles', 'Otto Puth Jr.', 'M', '16-DEC-1991', '775-542-6432', '2-JAN-2015', 10000000);
+INSERT INTO artist VALUES(18837, 'Kelly Clarkson', 'Kelly', 'Brianne Clarkson', 'F', '24-APR-1982', '575-456-7894', '15-JUL-2016', 45000000);
+INSERT INTO artist VALUES(72723, 'Sia', 'Sia Kate', 'Isobelle Furler', 'F', '18-DEC-1975', '783-424-8361', '1-AUG-2017', 30000000);
+INSERT INTO artist VALUES(92933, 'Rita Ora', 'Rita', 'Sahatçiu Ora', 'F', '26-NOV-1990', '273-423-6384', '20-JUN-2016', 30000000);
+
+
+CREATE TABLE album (
+    al_id NUMBER PRIMARY KEY,
+    a_id NUMBER,
+    al_name VARCHAR(30),
+    release_date DATE,
+    al_length VARCHAR(6),
+    total_tracks NUMBER,
+    total_sales NUMBER,
+    FOREIGN KEY (a_id) REFERENCES artist (a_id)
+);
+
+
+INSERT INTO album VALUES (092020048, 23244, 'Heaven and Hell', '18-SEP-2020', '44:45', 9, 700000);
+INSERT INTO album VALUES (042018547, 67832, 'Invasion of Privacy', '06-APR-2018', '48:13', 13, 3400000);
+INSERT INTO album VALUES (012016673, 79923, 'Nine Track Mind', '29-JAN-2016', '41:04', 12, 2530000);
+INSERT INTO album VALUES (052018244, 79923, 'Voicenotes', '11-MAY-2018', '44:29', 13, 650000);
+INSERT INTO album VALUES (112017933, 72723, 'Everyday Is Christmas', '17-NOV-2017', '35:07', 10, 400000);
+INSERT INTO album VALUES (112018875, 92933, 'Phoenix', '23-NOV-2018', '40:54', 12, 325000);
+INSERT INTO album VALUES (082017976, 18837, 'Meaning of Life', '27-AUG-2017', '44:08', 14, 800000);
+
+
+CREATE TABLE song (
+    s_id NUMBER PRIMARY KEY,
+    al_id NUMBER,
+    a_id NUMBER,
+    s_title VARCHAR(40),
+    genre VARCHAR(20),
+    s_length VARCHAR(6),
+    total_streams VARCHAR(5)
+);
+
+INSERT INTO song VALUES(20205637, 092020048, 23244, 'Sweet but Psycho', 'pop', '3:07', '17M');
+INSERT INTO song VALUES(20205638, 092020048, 23244, 'Kings and Queens', 'pop', '2:42', '335M');
+INSERT INTO song VALUES(20205639, 092020048, 23244, 'So Am I', 'pop', '3:13', '389M');
+INSERT INTO song VALUES(20205640, 092020048, 23244, 'Whos Laughing Now', 'pop', '3:16', '85M');
+INSERT INTO song VALUES(64769646, 012016673, 79923, 'One Call Away', 'pop', '3:14', '546M');
+INSERT INTO song VALUES(64769647, 012016673, 79923, 'We Dont Talk Anymore', 'pop', '3:38', '1B');
+INSERT INTO song VALUES(68694693, 052018244, 79923, 'Attention', 'pop', '3:29', '1.1B');
+INSERT INTO song VALUES(68694694, 052018244, 79923, 'How Long', 'pop', '3:21', '484M');
+INSERT INTO song VALUES(68694695, 052018244, 79923, 'Done for Me', 'pop', '3:00', '192M');
+INSERT INTO song VALUES(67492462, 042018547, 67832, 'Bodak Yellow', 'Hip hop', '3:44', '665M');
+INSERT INTO song VALUES(67492463, 042018547, 67832, 'I Like It', 'Hip hop', '4:13', '1.1B');
+INSERT INTO song VALUES(67492464, 042018547, 67832, 'Bartier Cardi', 'Hip hop', '3:44', '329M');
+INSERT INTO song VALUES(84527494, 112017933, 72723, 'Santas Coming for Us', 'pop', '3:21', '225M');
+INSERT INTO song VALUES(54869474, 082017976, 18837, 'Love So Soft', 'soul', '2:52', '67M');
+INSERT INTO song VALUES(54869475, 082017976, 18837, 'Heat', 'soul', '3:10', '18M');
+INSERT INTO song VALUES(54869476, 082017976, 18837, 'I Dont Think About You', 'soul', '3:44', '21M');
+INSERT INTO song VALUES(13736847, 112018875, 92933, 'Your Song', 'pop', '3:01', '500M');
+INSERT INTO song VALUES(13736848, 112018875, 92933, 'Anywhere', 'pop', '3:36', '440M');
+INSERT INTO song VALUES(13736849, 112018875, 92933, 'Let You Love Me', 'pop', '3:10', '399M');
+
+
+
+CREATE TABLE music_video (
+    v_id NUMBER PRIMARY KEY,
+    s_id NUMBER,
+    v_title VARCHAR(60),
+    total_views VARCHAR(5),
+    sponsor VARCHAR(25),
+    FOREIGN KEY (s_id) REFERENCES song (s_id)
+);
+
+INSERT INTO music_video VALUES(20180145, 20205637, 'Ava Max - Sweet but Psycho [Official Music Video]', '651M', NULL);
+INSERT INTO music_video VALUES(20200363, 20205639, 'Ava Max - So Am I [Official Music Video]', '173M', NULL);
+INSERT INTO music_video VALUES(78466379, 68694693, 'Charlie Puth - Attention [Official Video]', '1.2B', NULL);
+INSERT INTO music_video VALUES(46493946, 64769647, 'Charlie Puth - We Dont Talk Anymore (feat. Selena Gomez)', '2.5B', NULL);
+INSERT INTO music_video VALUES(67374982, 67492462, 'Cardi B - Bodak Yellow [OFFICIAL MUSIC VIDEO]', '951M', 'Gucci');
+INSERT INTO music_video VALUES(80846964,67492463,'Cardi B,Bad Bunny,J Balvin -I Like It [Official Music Video]','1.2B',NULL);
+INSERT INTO music_video VALUES(68653583, 84527494, 'Sia - Santas Coming For Us', '44M', NULL);
+INSERT INTO music_video VALUES(53658236, 13736849, 'Rita Ora - Let You Love Me [Official Video]', '442M', NULL);
+INSERT INTO music_video VALUES(79176463, 13736847, 'Rita Ora - Your Song (Official Video)', '62M', NULL);
+
+
+
+CREATE TABLE employee (
+    e_id NUMBER PRIMARY KEY,
+    e_fname VARCHAR(15),
+    e_lname VARCHAR(20),
+    e_contact VARCHAR(12),
+    e_gender VARCHAR(1),
+    e_dob DATE,
+    e_hiredate DATE,
+    e_salary NUMBER
+);
+
+INSERT INTO employee VALUES (2524, 'John', 'Doe', '244-324-3321', 'M', '17-JUN-1992', '3-DEC-2007', 500000);
+INSERT INTO employee VALUES (5252, 'Michael', 'Smith', '554-744-5621', 'M', '20-MAY-1990', '29-OCT-2010', 700000);
+INSERT INTO employee VALUES (5849, 'Sam', 'Martin', '667-374-7887', 'M', '25-MAR-1984', '21-APR-2010', 400000);
+INSERT INTO employee VALUES (5548, 'Dean', 'Winchester', '432-648-8946', 'M', '13-JAN-1987', '20-SEP-2012', 500000);
+INSERT INTO employee VALUES (5649, 'Amy', 'Santiago', '488-438-4714', 'F', '12-OCT-1990', '14-NOV-2015', 900000);
+INSERT INTO employee VALUES (8469, 'Shawn', 'Spencer', '481-245-1844', 'M', '3-MAY-1993', '15-JUN-2014', 800000);
+INSERT INTO employee VALUES (7084, 'Jake', 'Paralta', '491-252-1494', 'M', '31-DEC-1983', '11-JUL-2017', 300000);
+INSERT INTO employee VALUES (5628, 'Juliet', 'Ramsey', '634-149-1740', 'F', '6-JUL-1989', '4-JAN-2016', 500000);
+INSERT INTO employee VALUES (1463, 'Gus', 'Buttersnap', '945-194-1454', 'M', '2-NOV-1982', '24-OCT-2015', 800000);
+INSERT INTO employee VALUES (4382, 'Charles', 'Boyle', '154-414-7401', 'M', '27-APR-1987', '4-JAN-2013', 200000);
+INSERT INTO employee VALUES (2545, 'Jane', 'Doe', '245-414-7111', 'F', '18-FEB-1989', '5-JUN-2013', 700000);
+INSERT INTO employee VALUES (1413, 'Henry', 'Vick', '254-252-6565', 'M', '5-APR-1980', '14-MAY-2015', 800000);
+
+
+
+CREATE TABLE marketing (
+    e_id NUMBER,
+    dept VARCHAR(35),
+    PRIMARY KEY (e_id, dept),
+    FOREIGN KEY (e_id) REFERENCES employee (e_id)
+);
+
+INSERT INTO marketing VALUES (2524, 'Concert Marketing');
+INSERT INTO marketing VALUES (4382, 'Social Media Marketing');
+INSERT INTO marketing VALUES (5628, 'Album Marketing');
+INSERT INTO marketing VALUES (7084, 'Album Marketing');
+INSERT INTO marketing VALUES (5548, 'Social Media Marketing');
+INSERT INTO marketing VALUES (5849, 'Concert Marketing');
+
+
+
+CREATE TABLE manager (
+    a_id NUMBER,
+    e_id NUMBER,
+    PRIMARY KEY (a_id, e_id),
+    FOREIGN KEY (a_id) REFERENCES artist (a_id),
+    FOREIGN KEY (e_id) REFERENCES employee (e_id)
+);
+
+INSERT INTO manager VALUES (23244, 5252);
+INSERT INTO manager VALUES (67832, 8469);
+INSERT INTO manager VALUES (79923, 5649);
+INSERT INTO manager VALUES (18837, 1463);
+INSERT INTO manager VALUES (72723, 2545);
+INSERT INTO manager VALUES (92933, 1413);
+
+
+
+CREATE TABLE SCHEDULE (
+    SCHEDULE_ID NUMBER PRIMARY KEY,
+    A_ID NUMBER,
+    START_TIME TIMESTAMP,
+    WORK_TODO VARCHAR (100),
+    END_TIME TIMESTAMP,
+    DURATION_MIN NUMBER,
+    FOREIGN KEY (A_ID) REFERENCES ARTIST (A_ID)
+);
+
+
+
+INSERT INTO SCHEDULE VALUES (54252, 23244, TO_TIMESTAMP ('31-12-2020 22:30', 'DD-MM-YYYY HH24:MI'), 'New Year Countdown Performance at NY Square', TO_TIMESTAMP ('01-01-2021 00:30', 'DD-MM-YYYY HH24:MI'), NULL);
+INSERT INTO SCHEDULE VALUES (64924, 67832, TO_TIMESTAMP ('29-01-2021 20:00', 'DD-MM-YYYY HH24:MI'), 'New Album Promotion', TO_TIMESTAMP ('29-1-2021 22:00', 'DD-MM-YYYY HH24:MI'), NULL);
+INSERT INTO SCHEDULE VALUES (14693, 18837, TO_TIMESTAMP ('15-10-2020 18:00', 'DD-MM-YYYY HH24:MI'), 'Meaning of Life Concert in London', TO_TIMESTAMP ('15-10-2020 23:00', 'DD-MM-YYYY HH24:MI'), NULL);
+INSERT INTO SCHEDULE VALUES (34693, 79923, TO_TIMESTAMP ('18-01-2021 16:30', 'DD-MM-YYYY HH24:MI'), 'Studio Recording', TO_TIMESTAMP ('18-01-2021 20:30', 'DD-MM-YYYY HH24:MI'), NULL);
+INSERT INTO SCHEDULE VALUES (34633, 72723, TO_TIMESTAMP ('01-02-2021 15:30', 'DD-MM-YYYY HH24:MI'), 'Ellen DeGeneres Show', TO_TIMESTAMP ('01-02-2021 21:30', 'DD-MM-YYYY HH24:MI'), NULL);
+INSERT INTO SCHEDULE VALUES (23604, 92933, TO_TIMESTAMP ('11-02-2021 14:30', 'DD-MM-YYYY HH24:MI'), 'Interview with TIMES', TO_TIMESTAMP ('11-02-2021 16:15', 'DD-MM-YYYY HH24:MI'), NULL);
+INSERT INTO SCHEDULE VALUES (14671, 23244, TO_TIMESTAMP ('13-03-2021 12:00', 'DD-MM-YYYY HH24:MI'), 'Album Discussion', TO_TIMESTAMP ('13-03-2021 14:45', 'DD-MM-YYYY HH24:MI'), NULL);
+INSERT INTO SCHEDULE VALUES (41169, 67832, TO_TIMESTAMP ('23-03-2021 9:00', 'DD-MM-YYYY HH24:MI'), 'VMAs', TO_TIMESTAMP ('23-03-2021 10:00', 'DD-MM-YYYY HH24:MI'), NULL);
+SELECT * FROM schedule;
+-----------------------
+
+SELECT * FROM (
+SELECT 
+    artist.stage_name,
+    album.al_name,
+    album.release_date, 
+    album.total_tracks,
+    album.al_length
+FROM  album INNER JOIN artist
+ON album.a_id=artist.a_id
+ORDER BY album.al_length DESC
+)
+WHERE ROWNUM <= 3;
+
+----------------------------
+
+CREATE VIEW artist_manager AS
+SELECT
+  artist.stage_name,
+  artist.a_contact,
+  emp.e_fname,
+  emp.e_lname,
+  emp.e_contact
+FROM (employee emp
+JOIN manager m
+  ON emp.e_id = m.e_id
+JOIN artist
+  ON artist.a_id = m.a_id)
+WHERE artist.a_joindate >= '01-JAN-2016';
+
+
+
+SELECT * FROM artist_manager;
+
+------------------------------
+
+SELECT 
+      E.e_id, E.e_fname, E.e_lname, M.dept
+FROM Employee E
+INNER JOIN marketing M ON E.e_id=M.e_id
+ORDER BY e_id ASC;
+
+------------------------------
+
+SELECT EXTRACT (year FROM release_date) "Year",
+   COUNT (release_date) "No. of Albums"
+   FROM album
+   GROUP BY EXTRACT (year FROM release_date)
+   ORDER BY "Year" ASC;
+
+-----------------------------
+
+SELECT a.stage_name, v.v_title, v.total_views
+FROM artist a, song s, music_video v
+WHERE s.s_id=v.s_id AND a.a_id=s.a_id AND v.total_views LIKE '%B'
+ORDER BY total_views DESC;
+
+----------------------------
+
+UPDATE SCHEDULE
+ SET DURATION_MIN =  
+ EXTRACT (DAY FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME) * 24 * 60 +
+ EXTRACT (HOUR FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME) * 60 + 
+ EXTRACT (MINUTE FROM SCHEDULE.END_TIME - SCHEDULE.START_TIME);
+SELECT * FROM SCHEDULE;
+
+----------------------------
+
+select
+    ar.stage_name "Artist Name",ar.net_worth "Net Worth",
+    count(*) "Number of Songs"
+from
+    song s join album  al on s.al_id = al.al_id
+    	   join artist ar on al.a_id = ar.a_id
+group by ar.stage_name,ar.net_worth
+order by
+    count(*) desc;
+---------------------------
+
+select  
+	temp.artist "Artist Name",
+	count(*) "Number of Songs"
+from (
+       select
+           ar.stage_name as artist,
+           s.s_length as duration
+        from
+            song s join album al on s.al_id = al.al_id 
+            	    join artist ar on  al.a_id = ar.a_id
+        where s_length > '3'
+        ) temp
+group by
+	temp.artist
+order by count(*);
