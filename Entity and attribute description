@@ -1,0 +1,108 @@
+1. Artist:
+    • A_ID
+        This is the primary key attribute for the Artist Entity. This stores the IDs of all the Artists in the company or the label.
+    • FIRST_NAME
+        This attribute stores the first name of the artist.
+    • LAST_NAME
+        This attribute stores the last name of the artist.
+    • STAGE_NAME
+        This attribute is for storing the stage name of the artist if he/she has one.
+    • A_CONTACT
+        This attribute stores the contact number of the artist for communication purpose.
+    • A_JOINDATE
+        This attribute stores the date on which the artist joined the company or the label.
+    • A_GENDER
+        This attribute is for storing the gender details of the artist.
+    • A_DOB
+        This attribute stores the date of birth details of the artist.
+
+2. Album:
+    • A_ID
+        This is the foreign key attribute which refers to the A_ID in the Artist entity. This includes the ID of the Artists who are involved in making the album.
+    • AL_ID
+        This is the Primary key attribute for the Album entity. It stores the ID of each Album that is made in the company or the label.
+    • AL_NAME
+        This attribute stores the name of the album.
+    • AL_LENGTH
+        This attribute stores the length of the album.
+    • RELEASE_DATE
+        This attribute stores the date on which album is released.
+    • TOTAL_TRACKS
+        This attribute is for storing the number of tracks in an album.
+    • TOTAL_SALES
+        This attribute keeps track of the sales of the album.
+        
+ 3. Songs:
+    • AL_ID
+        This is the foreign key attribute that refers to AL_ID in the Album entity. This stores the ID of the Album in which the song is present.
+    • S_ID
+        This is the Primary key attribute which stores the IDs of all songs produced in the company or the label.
+    • S_TITLE
+        This attribute stores the title of the song.
+    • S_LENGTH
+        This attribute is for storing the duration of the song.
+    • GENRE
+        This attribute is for storing the genre of the song.
+    • TOTAL_STREAMS
+        This attribute stores the number of streams of a song.
+
+4. Music Video:
+    • AL_ID
+        This is the foreign key attribute that refers to the AL_ID attribute in the Album entity. This stores the ID of the Album in which a song is present on which the music video is made.
+    • S_ID
+        This is the foreign key attribute that refers to the S_ID attribute in the Song entity. This stores the ID of the song on which the Music Video is made.
+    • V_ID
+        This is the primary key attribute. It stores the IDs of all music videos that are made by the company or the label.
+    • V_TITLE
+        This attribute stores the name of the video.
+    • A_ID
+        This is a foreign key attribute that refers to the A_ID in the Artist Entity. This stores the IDs of the Artists who are involved in the making of the Video
+    • VIEWS
+        This attribute stores the number of views a video got.
+    • SPONSORS
+        This attribute stores the details of the sponsor if the video has one.
+
+
+5. Employee:
+    • E_ID
+        This is the primary key attribute that stores the IDs of the employees working under the company or the label.
+    • FIRST_NAME
+        This attribute is for storing the first name of the employee.
+    • LAST_NAME
+        This attribute is for storing the last name of the employee.
+    • E_CONTACT
+        This attribute stores the contact details of the employee for communication purpose.
+    • E_GENDER
+         This attribute stores the gender details of the employee.
+    • E_HIREDATE
+         This attribute stores the date on which the employee joined the company or the label.
+    • E_SALARY
+          This attribute stores the salary details of the employee.
+    • E_DOB
+          This attribute stores the date on which the employee was born.
+
+6. Schedule:
+    • A_ID
+        This is the foreign key attribute that refers to the A_ID in Artist entity. This stores the IDs of the Artist that has some work to do.
+    • START_TIME
+        This attribute stores the time on which the work must be started.
+    • WORK_TODO
+        This attribute stores the details of the work that must be done.
+    • DURATION
+        This attribute stores the approximate duration of the work.
+    • DATE
+        This attribute stores the tentative date of the work.
+    • END_TIME
+        This attribute is for storing the tentative end time of the work.
+
+7. Marketing:
+    • E_ID
+        This is the foreign key attribute which refers to the E_ID in the Employee entity. It stores the IDs of employees that are in marketing department.
+    • JOB_TYPE
+        This attribute stores the type of marketing job that an employee does.
+
+8. Managers:
+    • E_ID
+        This is the foreign key attribute which refers to the E_ID in the Employee entity. It stores the IDs of employees that work as managers to the artists.
+    • A_ID
+        This is the foreign key attribute which refers to the A_ID in the Artist entity. It stores the IDs of artists that has managers.
